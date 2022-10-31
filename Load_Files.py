@@ -1,6 +1,9 @@
+from os import listdir
+from pandas import read_csv
+# _______________________________________________________________________________
+
+
 def Load_Files(dir):
-    from os import listdir
-    from pandas import read_csv
     data = {}
     entries = listdir(dir)
     titles = ['Sensor', 'TimeStamp', 'Roll', 'Pitch', 'Yaw', 'xGyr', 'yGyr', 'zGyr',
