@@ -1,7 +1,10 @@
+# Importation of liberies.
 from numpy import split, cross, dot, arcsin, concatenate, apply_along_axis
 from numpy.linalg import norm
 from scipy.spatial.transform import Rotation as R
 from pandas import DataFrame, concat
+
+# Functions.
 # _______________________________________________________________________________
 
 

@@ -1,5 +1,8 @@
+# Importation of liberies.
 from os import listdir
 from pandas import read_csv
+
+# Functions.
 # _______________________________________________________________________________
 
 

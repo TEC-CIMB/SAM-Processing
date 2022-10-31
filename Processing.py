@@ -1,8 +1,11 @@
-from matplotlib.pyplot import subplots, show
-from numpy import where, linspace, argmax, append, median
+# Importation of liberies.
+from matplotlib.pyplot import show, subplots
+from numpy import append, argmax, linspace, median, where
+from pandas import DataFrame
 from scipy.interpolate import pchip_interpolate
 from scipy.signal import correlate, correlation_lags
-from pandas import DataFrame
+
+# Functions.
 # _______________________________________________________________________________
 
 
