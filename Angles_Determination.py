@@ -3,6 +3,7 @@ from numpy import split, cross, dot, arcsin, concatenate, apply_along_axis
 from numpy.linalg import norm
 from scipy.spatial.transform import Rotation as R
 from pandas import DataFrame, concat
+from math import degrees
 
 # Functions.
 # _______________________________________________________________________________
@@ -13,7 +14,6 @@ def ang_cal(pla_ang):
     This function calculates angle between the plane of reference in comparison
     of the vector of the angle.
     """
-    from math import degrees
     [a, b, r] = split(pla_ang, 3)
     n = cross(a, b)
     nr_dot = dot(n, r)
