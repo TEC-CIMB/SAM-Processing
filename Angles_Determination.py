@@ -13,11 +13,12 @@ def ang_cal(pla_ang):
     This function calculates angle between the plane of reference in comparison
     of the vector of the angle.
     """
+    from math import degrees
     [a, b, r] = split(pla_ang, 3)
     n = cross(a, b)
     nr_dot = dot(n, r)
     nr_mag = norm(n)*norm(r)
-    return arcsin(nr_dot/nr_mag)
+    return degrees(arcsin(nr_dot/nr_mag))
 # _______________________________________________________________________________
 
 
