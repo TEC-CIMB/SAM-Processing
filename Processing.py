@@ -165,3 +165,15 @@ def Same_size(data):
     for s in n:
         data[s] = data[s].iloc[0:l, :]
     return data
+# _______________________________________________________________________________
+
+
+def timeMove(data,seg):
+    """
+    This function adds seg (in seconds) to TimeStamp of data
+    """
+    
+    time = data['TimeStamp']
+    new_time = time + seg
+    data['TimeStamp'] = new_time
+    return data
