@@ -48,6 +48,7 @@ def Plot_Data(data, test, phase):
     axa.margins(0, 0.1)
     axb.margins(0, 0.1)
     axc.margins(0, 0.1)
+    axc.legend()
     fig.tight_layout()
     show()
     return None
@@ -141,14 +142,14 @@ def Syncronize(data):
         corr_max = argmax(corr, axis=0)
         lag = append(lag, median([lags[corr_max[0]], lags[corr_max[1]],
                                   lags[corr_max[2]]]))
-    n = append(ref, n)
-    if 0 > min(lag):
-        lag += abs(min(lag))
-    for s in range(0, len(n)):
-        data[n[s]] = data[n[s]].iloc[int(lag[s]):, :]
-        time = data[n[s]]['TimeStamp']
-        time = time-time.iloc[0]
-        data[n[s]]['TimeStamp'] = time
+#    n = append(ref, n)
+#    if 0 > min(lag):
+#        lag += abs(min(lag))
+#    for s in range(0, len(n)):
+#        data[n[s]] = data[n[s]].iloc[int(lag[s]):, :]
+#        time = data[n[s]]['TimeStamp']
+#        time = time-time.iloc[0]
+#        data[n[s]]['TimeStamp'] = time
     return data
 # _______________________________________________________________________________
 
@@ -164,4 +165,16 @@ def Same_size(data):
             l = len(data[n[i]])
     for s in n:
         data[s] = data[s].iloc[0:l, :]
+    return data
+# _______________________________________________________________________________
+
+
+def timeMove(data,seg):
+    """
+    This function adds seg (in seconds) to TimeStamp of data
+    """
+    
+    time = data['TimeStamp']
+    new_time = time + seg
+    data['TimeStamp'] = new_time
     return data
