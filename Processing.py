@@ -5,11 +5,13 @@ from pandas import DataFrame
 from scipy.interpolate import pchip_interpolate
 from scipy.signal import correlate, correlation_lags
 
+#Ja ja ja
 # Functions.
 # _______________________________________________________________________________
 
 
 def Plot_Data(data, test, phase):
+    a = None
     """
     This fuction plot the Roll, Pitch and Yaw data.
     """
