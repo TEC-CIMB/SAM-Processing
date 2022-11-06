@@ -14,8 +14,7 @@ def ang_cal(pla_ang):
     This function calculates angle between the plane of reference in comparison
     of the vector of the angle.
     """
-    [a, b, r] = split(pla_ang, 3)
-    n = cross(a, b)
+    [n, r] = split(pla_ang, 2)
     nr_dot = dot(n, r)
     nr_mag = norm(n)*norm(r)
     return degrees(arcsin(nr_dot/nr_mag))
@@ -31,17 +30,13 @@ def Angles_Hip(hi, fe, leg):
                        degrees=True).as_matrix()
     rfe = R.from_euler('xyz', fe.loc[:, ['Roll', 'Pitch', 'Yaw']],
                        degrees=True).as_matrix()
-    v_fe = concatenate((rhi[:, 1, :], rhi[:, 0, :], rfe[:, 0, :]), axis=1)
+    v_fe = concatenate((-rhi[:, 2, :], -rfe[:, 0, :]), axis=1)
     if leg == 'l':
-        v_aa = concatenate(
-            (rhi[:, 2, :], rhi[:, 0, :], -rfe[:, 0, :]), axis=1)
-        v_ro = concatenate(
-            (rhi[:, 2, :], rhi[:, 0, :], -rfe[:, 1, :]), axis=1)
+        v_aa = concatenate((rhi[:, 1, :], -rfe[:, 0, :]), axis=1)
+        v_ro = concatenate((rhi[:, 1, :], -rfe[:, 1, :]), axis=1)
     if leg == 'r':
-        v_aa = concatenate(
-            (rhi[:, 0, :], rhi[:, 2, :], -rfe[:, 0, :]), axis=1)
-        v_ro = concatenate(
-            (rhi[:, 0, :], rhi[:, 2, :], rfe[:, 1, :]), axis=1)
+        v_aa = concatenate((-rhi[:, 1, :], -rfe[:, 0, :]), axis=1)
+        v_ro = concatenate((rhi[:, 1, :], rfe[:, 1, :]), axis=1)
     # Flexion-Extension angles.
     f_e = DataFrame(apply_along_axis(
         ang_cal, 1, v_fe), columns=['Fle_Ext'])
@@ -63,20 +58,13 @@ def Angles_Knee(fe, ti, leg):
                        degrees=True).as_matrix()
     rti = R.from_euler('xyz', ti.loc[:, ['Roll', 'Pitch', 'Yaw']],
                        degrees=True).as_matrix()
+    v_aa = concatenate((rfe[:, 2, :], -rti[:, 0, :]), axis=1)
     if leg == 'l':
-        v_fe = concatenate(
-            (rfe[:, 2, :], rfe[:, 0, :], rti[:, 0, :]), axis=1)
-        v_aa = concatenate(
-            (rfe[:, 1, :], rfe[:, 0, :], -rti[:, 0, :]), axis=1)
-        v_ro = concatenate(
-            (rfe[:, 1, :], rfe[:, 0, :], -rti[:, 1, :]), axis=1)
+        v_fe = concatenate((rfe[:, 1, :], rti[:, 0, :]), axis=1)
+        v_ro = concatenate((rfe[:, 2, :], -rti[:, 1, :]), axis=1)
     if leg == 'r':
-        v_fe = concatenate(
-            (rfe[:, 0, :], rfe[:, 2, :], rti[:, 0, :]), axis=1)
-        v_aa = concatenate(
-            (rfe[:, 0, :], rfe[:, 1, :], -rti[:, 0, :]), axis=1)
-        v_ro = concatenate(
-            (rfe[:, 0, :], rfe[:, 1, :], rti[:, 1, :]), axis=1)
+        v_fe = concatenate((-rfe[:, 1, :], rti[:, 0, :]), axis=1)
+        v_ro = concatenate((rfe[:, 2, :], rti[:, 1, :]), axis=1)
     # Flexion-Extension angles.
     f_e = DataFrame(apply_along_axis(
         ang_cal, 1, v_fe), columns=['Fle_Ext'])
@@ -98,20 +86,12 @@ def Angles_Ankle(ti, fo, leg):
                        degrees=True).as_matrix()
     rfo = R.from_euler('xyz', fo.loc[:, ['Roll', 'Pitch', 'Yaw']],
                        degrees=True).as_matrix()
+    v_fe = concatenate((-rti[:, 0, :], -rfo[:, 0, :]), axis=1)
+    v_aa = concatenate((rti[:, 2, :], -rfo[:, 0, :]), axis=1)
     if leg == 'l':
-        v_fe = concatenate(
-            (rti[:, 1, :], rti[:, 2, :], -rfo[:, 0, :]), axis=1)
-        v_aa = concatenate(
-            (rti[:, 0, :], rti[:, 1, :], -rfo[:, 0, :]), axis=1)
-        v_ro = concatenate(
-            (rti[:, 1, :], rti[:, 2, :], -rfo[:, 1, :]), axis=1)
+        v_ro = concatenate((rti[:, 0, :], -rfo[:, 1, :]), axis=1)
     if leg == 'r':
-        v_fe = concatenate(
-            (rti[:, 2, :], rti[:, 1, :], -rfo[:, 0, :]), axis=1)
-        v_aa = concatenate(
-            (rti[:, 1, :], rti[:, 0, :], -rfo[:, 0, :]), axis=1)
-        v_ro = concatenate(
-            (rti[:, 2, :], rti[:, 1, :], rfo[:, 1, :]), axis=1)
+        v_ro = concatenate((rti[:, 0, :], rfo[:, 1, :]), axis=1)
     # Flexion-Extension angles.
     f_e = DataFrame(apply_along_axis(
         ang_cal, 1, v_fe), columns=['Fle_Ext'])
