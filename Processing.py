@@ -1,12 +1,27 @@
 # Importation of liberies.
 from matplotlib.pyplot import show, subplots
 from numpy import append, argmax, linspace, median, where
-from pandas import DataFrame
+from pandas import DataFrame, read_csv
 from scipy.interpolate import pchip_interpolate
 from scipy.signal import correlate, correlation_lags
-
-#Ja ja ja
+from os import listdir
 # Functions.
+# _______________________________________________________________________________
+
+
+def Load_Files(dir):
+    data = {}
+    entries = listdir(dir)
+    titles = ['Sensor', 'TimeStamp', 'Roll', 'Pitch', 'Yaw', 'xGyr', 'yGyr', 'zGyr',
+              'BatteryLVL']
+    for i in entries:
+        if 'SENSOR' in i:
+            name = i.split('.')
+            s = read_csv(dir + i, sep=",")
+            s.columns = titles
+            s['TimeStamp'] = s['TimeStamp']/1000
+            data[name[0]] = s
+    return data
 # _______________________________________________________________________________
 
 
